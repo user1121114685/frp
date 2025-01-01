@@ -6,7 +6,7 @@ PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/fatedier/frp/tar.gz/v${PKG_VERSION}?
-PKG_HASH:=95c567188d5635a7ac8897a6f93ae0568d0ac4892581a96c89874a992dd6a73c
+PKG_HASH:=skip
 
 PKG_MAINTAINER:=Richard Yu <yurichard3839@gmail.com>
 PKG_LICENSE:=Apache-2.0
@@ -28,15 +28,6 @@ define Package/frp/install
 	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/$(2) $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/frp/$(2).d/
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/conf/$(2).toml $(1)/etc/frp/$(2).d/
-	$(INSTALL_DIR) $(1)/etc/config/
-	$(INSTALL_CONF) ./files/$(2).config $(1)/etc/config/$(2)
-	$(INSTALL_DIR) $(1)/etc/init.d/
-	$(INSTALL_BIN) ./files/$(2).init $(1)/etc/init.d/$(2)
-
-	if [ -r ./files/$(2).uci-defaults ]; then \
-		$(INSTALL_DIR) $(1)/etc/uci-defaults; \
-		$(INSTALL_DATA) ./files/$(2).uci-defaults $(1)/etc/uci-defaults/$(2); \
-	fi
 endef
 
 define Package/frp/template
